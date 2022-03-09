@@ -1,0 +1,27 @@
+﻿@model IQueryable<Order>
+@{
+    TextField textField = ViewBag.TextField;
+
+    ViewBag.Title = textField.MetaTitle;
+    ViewBag.Description = textField.MetaDescription;
+    ViewBag.Keywords = textField.MetaKeywords;
+}
+
+<div>
+    @if (Model?.Any() ?? false)
+    {
+        <ul class="big-image-list">
+            @foreach (Order entity in Model)
+            {
+                <li>
+                    <a asp-area="" asp-controller="Orders" asp-action="Index" asp-route-id="@entity.Id">
+                        <img src="~/images/@entity.TitleImagePath" alt="" class="left"/>
+                    </a>
+                    <h4>@entity.Title</h4>
+                    <p>@entity.Subtitle</p>
+                    <p>from @(entity.Customer?.Email ?? "unknown") @(entity.Executor != null ? " to " + entity.Executor?.Email : "")</p>
+                </li>
+            }
+        </ul>
+    }
+</div>

@@ -1,0 +1,41 @@
+﻿@model IQueryable<Order>
+@{
+    string strTitle = "Моя страница исполнителя";
+    ViewBag.Title = strTitle;
+}
+
+<div>
+    <h2>@strTitle</h2>
+    <div>
+        <h3>Вы можете выполнить любой из этих заказов</h3>
+
+        @if (Model?.Any() ?? false)
+        {
+            <div>
+                @foreach (Order entity in Model)
+                {
+                    <div>
+                        <a asp-area="Executor" asp-controller="Orders" asp-action="Edit" asp-route-id="@entity.Id">выполнить</a>
+                        @*|
+                        <form style="display: inline-block;" id="form-@entity.Id" asp-area="Executor" asp-controller="Orders" asp-action="Delete" method="post">
+                            <input type="hidden" name="id" value="@entity.Id">
+                            <a href="#" onclick="document.getElementById('form-@entity.Id').submit();">удалить</a>
+                        </form>*@
+                        | Просмотреть
+                        <a asp-area="" asp-controller="Orders" asp-action="Index" asp-route-id="@entity.Id">
+                            @($"{entity.Title}")
+                        </a>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+    <div class="div-box">
+        <form asp-area="" asp-controller="Account" asp-action="Logout" method="post">
+            <input type="submit" value="Выйти" />
+        </form>
+    </div>
+</div>
+
+

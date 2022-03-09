@@ -1,0 +1,61 @@
+﻿@model Order
+@{
+    string strTitle = "Состояние заказа";
+    ViewBag.Title = strTitle;
+    ViewBag.Description = Model.MetaDescription;
+    ViewBag.Keywords = Model.MetaKeywords;
+}
+
+<div>
+    <h2>@strTitle</h2>
+    <div>
+        <div>
+            <h2>
+                @Model.Title
+                Текущее состояние Вашего заказа: @Model.Status
+            </h2>
+            <h2>
+                @Model.Subtitle
+            </h2>
+            <div>
+                <img class="img-block" src="~/images/@Model.TitleImagePath"/>
+            </div>
+        </div>
+        <div>
+            @Html.Raw(Model.Text)
+        </div>
+        <div>
+
+            <form asp-area="Customer" asp-controller="Orders" asp-action="Check" method="post" enctype="multipart/form-data">
+                <input type="hidden" asp-for="Id"/>
+                <input type="hidden" asp-for="DateAdded"/>
+                <input type="hidden" asp-for="TitleImagePath"/>
+                <input type="hidden" asp-for="Title"/>
+                <input type="hidden" asp-for="Subtitle"/>
+                <input type="hidden" asp-for="MetaTitle"/>
+                <input type="hidden" asp-for="MetaDescription"/>
+                <input type="hidden" asp-for="MetaKeywords"/>
+                <input type="hidden" asp-for="CustomerId"/>
+                <input type="hidden" asp-for="ExecutorId"/>
+
+                <div asp-validation-summary="All"></div>
+                @*<div class="div-box">
+<label asp-for="Status"></label>
+<input asp-for="Status" />
+<span asp-validation-for="Status"></span>
+</div>*@
+
+
+                <label asp-for="Status"></label>
+                <select asp-for="Status">
+                    <option value="@OrderStatus.Done">Done</option>
+                    <option value="@OrderStatus.Created">Created</option>
+                    <option value="@OrderStatus.ReadyForReview">Ready for review</option>
+                </select>
+                <span asp-validation-for="Status"></span>
+
+                <input type="submit" value="Сохранить"/>
+            </form>
+        </div>
+    </div>
+</div>

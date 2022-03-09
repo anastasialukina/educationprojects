@@ -1,0 +1,45 @@
+﻿@model IQueryable<Order>
+@{
+    string strTitle = "Моя страница заказчика";
+    ViewBag.Title = strTitle;
+}
+
+<div>
+    <h2>@strTitle</h2>
+    <div>
+        <h3>Мои заказы</h3>
+        <div class="div-box">
+            <a asp-area="Customer" asp-controller="Orders" asp-action="Edit" asp-route-id="">Создать заказ</a>
+        </div>
+        @if (Model?.Any() ?? false)
+        {
+            <div>
+                @foreach (Order entity in Model)
+                {
+                    <div>
+                        <a asp-area="Customer" asp-controller="Orders" asp-action="Edit" asp-route-id="@entity.Id">редактировать</a>
+                        |
+                        <a asp-area="Customer" asp-controller="Orders" asp-action="Check" asp-route-id="@entity.Id">проверить</a>
+                        |
+                        <form style="display: inline-block;" id="form-@entity.Id" asp-area="Customer" asp-controller="Orders" asp-action="Delete" method="post">
+                            <input type="hidden" name="id" value="@entity.Id">
+                            <a href="#" onclick="document.getElementById('form-@entity.Id').submit();">удалить</a>
+                        </form>
+                        |
+                        <a asp-area="" asp-controller="Orders" asp-action="Index" asp-route-id="@entity.Id">
+                            @($"{entity.Title}") from @(entity.Customer?.Email ?? "unknown")
+                        </a>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+    <div class="div-box">
+        <form asp-area="" asp-controller="Account" asp-action="Logout" method="post">
+            <input type="submit" value="Выйти" />
+        </form>
+    </div>
+</div>
+
+

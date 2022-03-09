@@ -1,0 +1,36 @@
+﻿@using MyCompany.Domain
+@model RegisterViewModel
+<div>
+    <h1>Регистрация в личный кабинет</h1>
+    <div class="div-box">
+        <form asp-area="" asp-controller="Account" asp-action="Register" method="post" asp-route-returnUrl="@ViewBag.returnUrl">
+            <div asp-validation-summary="All"></div>
+            <div>
+                <label asp-for="Email"></label>
+                <input asp-for="Email"/>
+                <span asp-validation-for="Email"></span>
+            </div>
+            <div>
+                <label asp-for="UserName"></label>
+                <input asp-for="UserName"/>
+                <span asp-validation-for="UserName"></span>
+            </div>
+            <div>
+                <label asp-for="DesiredRole"></label>
+                <select asp-for="DesiredRole">
+                    <option value="@AppDbContext.CustomerRole">Заказчик</option>
+                    <option value="@AppDbContext.ExecutorRole">Исполнитель</option>
+                </select>
+                <span asp-validation-for="DesiredRole"></span>
+            </div>
+            <div>
+                <label asp-for="Password"></label>
+                <input asp-for="Password"/>
+                <span asp-validation-for="Password"></span>
+            </div>
+            <div>
+                <input type="submit" value="Register"/>
+            </div>
+        </form>
+    </div>
+</div>
